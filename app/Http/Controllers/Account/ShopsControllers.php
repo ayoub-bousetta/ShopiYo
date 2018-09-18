@@ -128,7 +128,6 @@ class ShopsControllers extends Controller
 
 
 
-        dd(Auth::check());
         //Check if user is IN
         if (Auth::check()) {
 
@@ -157,7 +156,7 @@ class ShopsControllers extends Controller
                 $vote = new Vote;
                 
                 $vote->shop_id = $id;
-                $vote->user_id = $Auth::id();
+                $vote->user_id = Auth::user()->id;
                 $vote->vote = ($ud == 'u') ? 1 : -1 ;
 
                 dd($vote->save());
@@ -174,6 +173,11 @@ class ShopsControllers extends Controller
          }
 
     }
+
+
+
+
+     
 
 
 

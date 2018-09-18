@@ -75,7 +75,9 @@ class UsersControllers extends Controller
 
 
 
-      //Log User IN
+      /**
+     * Login And Execut respondWithToken() if true
+     */
       function logmein(Request $request){
 
       
@@ -111,14 +113,14 @@ class UsersControllers extends Controller
 
              $credentials=['email' => $email, 'password' => $password, 'active' => $active ];
              
-            if (Auth::attempt($credentials)) {
+
+            if ($token =Auth::attempt($credentials)) {
             // Authentication passed...
             $user = Auth::user();
-        
-            return response()->json(compact('user'));
+            return $this->respondWithToken($token);
                 }else{
                   
-                    return response()->json(['errors'=>'Failed to connect']);
+                    return response()->json(['error' => 'Unauthorized'], 401);
 
                 }
 
@@ -147,18 +149,77 @@ class UsersControllers extends Controller
     }
 
 
+     /**
+     * Get the authenticated User.
+     */
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+
+
+
+     /**
+     * Logout And kill the Token
+     */
 
     function logmeout(){
 
         
   
         if (Auth::check()) {
+
+            
             Auth::logout();
-            $this->flag=true;
             return response()->json(['Success'=>"You're now disconnected"]);
 
         }
         
+    }
+
+
+     /**
+     * Refresh a token.
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+
+
+
+      /**
+     * Get the token array structure.
+     *
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
+    }
+
+
+
+     /**
+     * Shops i judged
+     *
+     */
+    function preferred(){
+
+
+       // $getPreffered=User::find(Auth::user()->id)->vote;
+        $components = User::with('vote.shop')->where(['id'=> Auth::user()->id])->first();
+
+
+        return response()->json(compact('components'));
+
+        
+
     }
 
 
