@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vote extends Model
 {
-    
+    protected $fillable = ['vote'];
      /**
      * belongsToShop
      */
@@ -14,4 +14,8 @@ class Vote extends Model
     {
         return $this->belongsTo('App\Shop');
     }
+
+
+
+
 }

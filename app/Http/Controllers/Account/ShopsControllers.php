@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 use App\Shop;
-use App\Vote;
 
 class ShopsControllers extends Controller
 {
@@ -17,7 +16,12 @@ class ShopsControllers extends Controller
   
     function index(){
 
-        $shops = Shop::all();
+        $shops = Shop::all()->vote;
+        $shops = Vote::with('shop')->where(['user_id'=> Auth::user()->id])->get();
+
+        $votecount=$shops->vote->count();
+        dd($votecount);
+
         return response()->json(compact('shops'));
 
     }
@@ -124,56 +128,7 @@ class ShopsControllers extends Controller
 
 
     
-    function vote($id,$ud,Request $request){
-
-
-
-        //Check if user is IN
-        if (Auth::check()) {
-
-
-
-       
-        
-        $data =[
-            'id'=>$id,
-            'ud'=>$ud
-        ];
-
-        $validator = Validator::make($data, [
-            'id' => 'required|integer|exists:shops',
-            'ud' => 'required|string|max:1', //u for Up, d for Down
-            
-        ]);
-
-
-          
-
-            //Check validation data
-            if (!$validator->fails()) {
-                # code...
-
-                $vote = new Vote;
-                
-                $vote->shop_id = $id;
-                $vote->user_id = Auth::user()->id;
-                $vote->vote = ($ud == 'u') ? 1 : -1 ;
-
-                dd($vote->save());
-
-            }else{
-                return response()->json(['errors'=>$validator->errors()]);
-            }
-      
-
-         }else{
-
-            //Not LogIn
-            return response()->json(['errors'=>"You're not Conneceted"]);
-         }
-
-    }
-
+   
 
 
 

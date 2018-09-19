@@ -18,13 +18,25 @@ use Illuminate\Http\Request;
 // });
 
 
-Route::get('/shops', 'ShopsControllers@index');
-Route::put('/editshop','ShopsControllers@store');
-Route::post('/addshop','ShopsControllers@store');
 
 
 
-//Create User
+
+//Admin
+
+$router->group(['namespace'=>'Admin','prefix' => 'admin','middleware' => 'api'], function () use ($router) {
+
+
+
+    $router->post('/editshop','ShopsControllers@store');
+    $router->post('/addshop','ShopsControllers@store');
+
+});
+
+
+
+
+//User
 
 $router->group(['namespace'=>'Account','prefix' => 'account','middleware' => 'api'], function () use ($router) {
     $router->post('create',['as'=>'create','uses'=>'UsersControllers@store']);
@@ -33,22 +45,28 @@ $router->group(['namespace'=>'Account','prefix' => 'account','middleware' => 'ap
     $router->post('refresh', ['as'=>'refresh','uses'=>'UsersControllers@refresh']);
     $router->post('me', ['as'=>'profile','uses'=>'UsersControllers@me']);
 
-    //Like/Dislike a shop (ud => Up or Down)
-    $router->get('/vote/{id}-{ud}',['as'=>'votes','uses'=>'ShopsControllers@vote']);
+ 
 
 
 
     /*
     *@VotesControllers
     */
-     
+
+    //Like/Dislike a shop (ud => Up or Down) 
+    $router->get('/shop/vote/{id}-{ud}',['as'=>'votes','uses'=>'VotesControllers@vote']);
+
     //My Liked Shops
     $router->get('/preferred',['as'=>'preferred','uses'=>'VotesControllers@preferred']);
 
     //Remove it from my Liked list
-    $router->get('/remove',['as'=>'remove','uses'=>'VotesControllers@remove']);
+    $router->delete('/preferred/remove/{id}',['as'=>'remove','uses'=>'VotesControllers@remove']);
      
    
 });
 
 
+
+
+//Jon Doe
+Route::get('/shops/{distance?}', 'ShopsControllers@index');

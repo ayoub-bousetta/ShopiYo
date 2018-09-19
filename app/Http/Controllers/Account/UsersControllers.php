@@ -205,22 +205,7 @@ class UsersControllers extends Controller
 
 
 
-     /**
-     * Shops i judged
-     *
-     */
-    function preferred(){
-
-
-       // $getPreffered=User::find(Auth::user()->id)->vote;
-        $components = User::with('vote.shop')->where(['id'=> Auth::user()->id])->first();
-
-
-        return response()->json(compact('components'));
-
-        
-
-    }
+     
 
 
 
