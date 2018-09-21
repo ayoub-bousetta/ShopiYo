@@ -1,24 +1,57 @@
 <template>
-  <div class="ddg">
-  <h1>This is Shops</h1>
   
-  <FilterShop/>
-  
-  <div v-for="shop in loadShops" :key="shop.id">
+     <section class="shops"> <!--For Shops  Template in vue-->
+                <FilterShop/>
+                
+                <div class="container">
+
+                        <h2>Shops from our DB</h2>
+                    
+               <div class="row">
+
+                        <div class="col-md-4" v-for="shop in loadShops" :key="shop.id">
+                            <div class="box">
+                                <h3>{{shop.name}} <span>Votes: {{shop.vote_count}}</span></h3>
+                                <div class="imgs">
+
+                                        <img src="https://www.soc.tas.edu.au/wp-content/uploads/college-shop-internal.jpg" alt="">
+
+                                </div>
+                                
+                                <div class="box_foot">
+                                        <address>{{shop.address}}</address>
 
 
-     <p>Name:  {{shop.name}}</p>
-     <p> Address:  {{shop.address}}</p>
-     <p> Votes:  {{shop.vote_count}}</p>
-      <p> Likes {{shop.likes_count}}</p>
-      <p >  Dislikes {{shop.dislikes_count}}</p>
+                                    <div class="like_duskike">
 
-      <button v-on:click="Like(shop.id)"  :class="{ Voted: likedShop !=false }" >Like</button>
-      <button v-on:click="disLike(shop.id)" :class="{ Voted: dislikedShop !=false }">Dislike</button>
+                                          <span><i class="material-icons " :class="{ liked: likedShop !=false }">
+                                            sentiment_satisfied_alt
+                                            </i><small>{{shop.likes_count}}</small></span>
+                                            
+                                    <span><i class="material-icons " :class="{ disliked: likedShop !=false }"   >
+                                            sentiment_very_dissatisfied
+                                            </i><small>{{shop.dislikes_count}}</small></span>
+
+                                             <!-- <button v-on:click="Like(shop.id)"  :class="{ Voted: likedShop !=false }" >Like</button>
+      <button v-on:click="disLike(shop.id)" :class="{ Voted: dislikedShop !=false }">Dislike</button> -->
     
+                                    </div>
+                                  
 
-  </div>
-   </div>
+                                            
+                                            <p>Distance : <b>{{shop.distance}}</b> km</p>
+                                </div>
+
+
+                                
+                            </div>
+
+                        </div>
+                        
+                        
+                    </div> 
+                </div>
+            </section>
 </template>
 
 
@@ -84,5 +117,7 @@ data(){
 
 
 <style scoped>
-
+.shops{
+  height:100%;
+}
 </style>
