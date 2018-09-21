@@ -151,8 +151,8 @@ class ShopsControllers extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
-                'lat' => 'required|decimal',
-                'lng' => 'required|decimal',
+                //'lat' => 'required|regex:/^\d*(\.\d{10,8})?$/',
+                //'lng' => 'required|regex:/^\d*(\.\d{11,8})?$/',
 
 
 
@@ -204,8 +204,8 @@ class ShopsControllers extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'lat' => 'required|decimal',
-            'lng' => 'required|decimal',
+            //'lat' => 'required|regex:/^\d*(\.\d{10,8})?$/',
+                //'lng' => 'required|regex:/^\d*(\.\d{11,8})?$/',
 
 
 

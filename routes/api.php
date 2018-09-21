@@ -41,6 +41,12 @@ $router->group(['namespace'=>'Admin','prefix' => 'admin','middleware' => 'api'],
 $router->group(['namespace'=>'Account','prefix' => 'account','middleware' => 'api'], function () use ($router) {
 
 
+
+    //Admin
+    $router->post('/editshop','ShopsControllers@store');
+    $router->post('/addshop','ShopsControllers@store');
+
+
      /*
     *@UsersControllers
     */
