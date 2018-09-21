@@ -39,8 +39,12 @@ $router->group(['namespace'=>'Admin','prefix' => 'admin','middleware' => 'api'],
 //User
 
 $router->group(['namespace'=>'Account','prefix' => 'account','middleware' => 'api'], function () use ($router) {
+
+
+     /*
+    *@UsersControllers
+    */
     $router->post('create',['as'=>'create','uses'=>'UsersControllers@store']);
-    $router->post('login',['as'=>'login','uses'=>'UsersControllers@logmein']);
     $router->post('logout',['as'=>'logout','uses'=>'UsersControllers@logmeout']);
     $router->post('refresh', ['as'=>'refresh','uses'=>'UsersControllers@refresh']);
     $router->post('me', ['as'=>'profile','uses'=>'UsersControllers@me']);
@@ -70,3 +74,5 @@ $router->group(['namespace'=>'Account','prefix' => 'account','middleware' => 'ap
 
 //Jon Doe
 Route::get('/shops/{distance?}', 'ShopsControllers@index');
+Route::post('login',['as'=>'login','uses'=>'UsersControllers@logmein']);
+Route::post('create',['as'=>'create','uses'=>'UsersControllers@store']);
