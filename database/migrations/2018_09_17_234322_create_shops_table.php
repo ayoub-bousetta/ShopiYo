@@ -17,8 +17,11 @@ class CreateShopsTable extends Migration
             $table->increments('id');
             $table->char('name');
             $table->mediumText('address');
-            $table->decimal('lat',10, 8); //Intg because of value lenght... if you're sure you can use float(10.6)
-            $table->decimal('lng',11, 10);
+            $table->mediumInteger('lat'); //Intg because of value lenght... if you're sure you can use float(10.6)
+            $table->mediumInteger('lng');
+            $table->integer('likes_count')->default(0);
+            $table->integer('dislikes_count')->default(0);
+
             $table->timestamps();
         });
     }
