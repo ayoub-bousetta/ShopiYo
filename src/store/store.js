@@ -123,7 +123,7 @@ const store =  new Vuex.Store({
             RegisterUser ({ commit },userInfo) {
 
                 return  axios
-                  .post('/account/create/', {
+                  .post('/create/', {
                     email: userInfo.email,
                     password: userInfo.password,
                   })
@@ -151,7 +151,7 @@ const store =  new Vuex.Store({
               AuthRequest ({ commit },userInfo) {
                 //commit("AUTH_REQUEST"); //ONCF Train Show
                 return  axios
-                  .post('/account/login/', {
+                  .post('/login/', {
                     email: userInfo.email,
                     password: userInfo.password,
                   })
@@ -196,7 +196,24 @@ const store =  new Vuex.Store({
 
             //Shops Near me :)
             GET_SHOPS (state, shops) {
-                state.shops = shops
+                
+
+                let length = 30;
+
+              state.shops = shops.map(shop=> {
+
+
+                //Limit lenght
+                //ufirst only
+                shop.address =shop.address.substring(0, length) + "..." 
+                shop.address = shop.address.toLowerCase()
+
+                    
+                return shop
+              })
+
+
+
               
               },
 

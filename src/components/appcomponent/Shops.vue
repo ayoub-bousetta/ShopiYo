@@ -116,8 +116,21 @@ data(){
 
 
 
-<style scoped>
+<style scoped >
 .shops{
   height:100%;
 }
+
+ p{
+       position: absolute;
+    bottom: 10px;
+    right: 12px;
+  }
+    .box{
+    min-height: 453px; position: relative;
+  }
+  address{
+    text-transform: capitalize;
+  }
+
 </style>

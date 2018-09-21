@@ -1,12 +1,39 @@
 <template>
-    <div class="regfor">
-          <form v-on:submit.prevent="logMein">
-              <input type="email" autocomplete  v-model="email"  />
-        <input type="password" autocomplete  v-model="password" />
-        <button  >Let rock</button>
+ 
 
-        </form>
-    </div>
+     <section class='login'><!--For Login and register Template in vue-->
+
+                <div class="container">
+
+                        <div class="title_form">
+
+                                <h2>Login</h2><span>No Account yet? : <router-link to="register">Create one</router-link></span>
+                        </div>
+                  
+
+                            <form v-on:submit.prevent="logMein">
+                                <div class="form-group">
+                                        <label for="usr">Email:</label>
+                                      
+                                                      <input type="email" autocomplete  v-model="email"  class="form-control" id="usr">
+
+                                </div>
+                                <div class="form-group">
+                                        <label for="pwd">Password:</label>
+                                           <input type="password" autocomplete  v-model="password" class="form-control" id="pwd">
+                                    
+                                </div>
+
+                                <div class="form-group">
+                                        <button>Login</button>
+                                </div>
+
+                               
+                              </form>
+
+                        
+                </div>
+            </section>
 </template>
 <script>
 export default {
@@ -55,3 +82,10 @@ data(){
     }
 }
 </script>
+
+
+<style scoped>
+.login {
+    background: #efeceb;
+}
+</style>
