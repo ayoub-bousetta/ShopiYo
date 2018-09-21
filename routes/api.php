@@ -57,7 +57,7 @@ $router->group(['namespace'=>'Account','prefix' => 'account','middleware' => 'ap
     $router->get('/shop/vote/{id}-{ud}',['as'=>'votes','uses'=>'VotesControllers@vote']);
 
     //My Liked Shops
-    $router->get('/preferred',['as'=>'preferred','uses'=>'VotesControllers@preferred']);
+    $router->get('/preferred',['as'=>'preferred','uses'=>'ShopsControllers@preferred']);
 
     //Remove it from my Liked list
     $router->delete('/preferred/remove/{id}',['as'=>'remove','uses'=>'VotesControllers@remove']);

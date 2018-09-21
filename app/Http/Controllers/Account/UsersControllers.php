@@ -16,7 +16,7 @@ class UsersControllers extends Controller
 
     public function __construct()
     {       
-
+        $this->middleware('auth');
             
     }
 
@@ -44,7 +44,7 @@ class UsersControllers extends Controller
       
         if ($createUser->save()) {
          
-    return response()->json(compact('createUser'));
+            return response()->json(compact('createUser'));
 
 
         }else{
@@ -120,7 +120,7 @@ class UsersControllers extends Controller
             return $this->respondWithToken($token);
                 }else{
                   
-                    return response()->json(['error' => 'Unauthorized'], 401);
+                    return response()->json(['errors' => ['Wrong username/password combination.',401]]);
 
                 }
 

@@ -19,18 +19,7 @@ class VotesControllers extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Shops i judged
-     *
-     */
-    function preferred(){
-
-
-         $components = Vote::with('shop')->where(['user_id'=> Auth::user()->id,'vote'=>1])->get();
-         return response()->json(compact('components'));
- 
-         
-     }
+  
 
 
       /**
@@ -56,7 +45,7 @@ class VotesControllers extends Controller
      * Shops i Hate and i wanna remove now 
      *@Id => Base on id and user_id
      */
-  public  function remove($id){
+     public  function remove($id){
 
 
        
@@ -85,12 +74,7 @@ class VotesControllers extends Controller
 
 
         //Check if user is IN
-        if (Auth::check()) {
-
-
-
-       
-        
+      
         $data =[
             'id'=>$id, //Shop id
             'ud'=>$ud //vote val
@@ -152,11 +136,7 @@ class VotesControllers extends Controller
             }
       
 
-         }else{
-
-            //Not LogIn
-            return response()->json(['errors'=>"You're not Conneceted"]);
-         }
+       
 
     }
 

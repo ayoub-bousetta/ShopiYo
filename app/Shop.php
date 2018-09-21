@@ -57,9 +57,17 @@ class Shop extends Model
     public static function getByDistance($lat, $lng, $distance)
         {
 
-
             $calcd='6371 * (acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat .') ) * sin( radians(lat) ) ))' ;
-        $results = DB::select(DB::raw('SELECT id,'.$calcd.' AS distance FROM shops  HAVING distance < ' . $distance . ' ORDER BY distance') );
+
+            if ($distance == false) {
+                //Home Page Without distance
+                $results = DB::select(DB::raw('SELECT id,'.$calcd.' AS distance FROM shops ORDER BY distance') );
+
+            }else{
+                $results = DB::select(DB::raw('SELECT id,'.$calcd.' AS distance FROM shops  HAVING distance < ' . $distance . ' ORDER BY distance') );
+
+            }
+
        
        
         return $results;
