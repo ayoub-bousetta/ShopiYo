@@ -45,12 +45,21 @@ html {
         .shops{
 
             .box{
+                border: 0;
+                background: #fff;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                padding: 15px;
+                margin-bottom: 20px;
                 h3{
                     margin: 0px;
+                    position: relative;
+                    padding-left: 20px;
                     &:before {
                         content: "";
                         position: absolute;
-                        top: 0.5rem;
+                        top: 10px;
                         left: 0;
                         width: 8px;
                         height: 8px;
@@ -59,12 +68,54 @@ html {
                     }
                 }
 
-                img{
+                .imgs{ 
                     width: 100%;
+                    height: 250px;
+                    overflow: hidden;
+                    
+                    
+                    img{
+                       
+                        filter: grayscale(100%);
+                        transition: all .5s ease-in;
+                        &:hover{
+                            filter: grayscale(0%);
+                        }
+
+
+                      
+    
+                       
+                    }
+
+                   &:before {
+                        content: "";
+                        display: block;
+                        margin-bottom: 8px;
+                        border-bottom: 1px solid #e2e2e2;
+                        clear: both;
+                    }
+                 
+
                 }
-                address{
-                    font-size: 85%;
+
+                .box_foot{
+
+                    &:before {
+                        content: "";
+                        display: block;
+                        margin-bottom: 8px;
+                        border-bottom: 1px solid #e2e2e2;
+                        clear: both;
+                    }
+
+                    address{
+                        font-size: 85%;
+                    }
+
                 }
+               
+               
 
             }
 
