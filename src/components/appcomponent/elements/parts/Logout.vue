@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-    name:'Logout',
+    name:'LogOut',
   mounted () {
 
 

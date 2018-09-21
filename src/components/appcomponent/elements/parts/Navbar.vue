@@ -4,7 +4,7 @@
             <li>My Area Shops</li>
             <li v-if="isAuth">My Preffered Shops</li><!--Show Loged in users-->
             <li v-if="!isAuth">Login</li>
-             <li v-if="!isAuth">Register</li>
+             <li v-if="!isAuth"><router-link to="{register}">Register</router-link> </li>
 
         </ul>
     </nav>
