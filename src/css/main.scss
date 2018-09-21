@@ -57,21 +57,34 @@ html {
                     margin: 0px;
                     position: relative;
                     padding-left: 20px;
+                    font-size: 1rem;
+
+                    span{
+                        float: right;
+                        font-size: 0.8rem;
+                    }
                     &:before {
                         content: "";
                         position: absolute;
-                        top: 10px;
+                        top: 8px;
                         left: 0;
                         width: 8px;
                         height: 8px;
                         background: #78cdd1;
                         border-radius: 8px;
                     }
+
+                    &::after{
+                        content: '';
+                        display: block;
+                        clear: both;
+
+                    }
                 }
 
                 .imgs{ 
                     width: 100%;
-                    height: 137px;
+                    height: 230px;
                     overflow: hidden;
                     
                     
@@ -92,7 +105,8 @@ html {
                    &:before {
                         content: "";
                         display: block;
-                        margin-bottom: 8px;
+                            margin-bottom: 8px;
+                            margin-top: 8px;
                         border-bottom: 1px solid #e2e2e2;
                         clear: both;
                     }
@@ -106,6 +120,7 @@ html {
                         content: "";
                         display: block;
                         margin-bottom: 8px;
+                        margin-top: 8px;
                         border-bottom: 1px solid #e2e2e2;
                         clear: both;
                     }
@@ -113,56 +128,72 @@ html {
                     address{
                         font-size: 1rem;
                         font-style: normal;
-                        margin: 8px 0px;
+                        margin: 15px 0px;
+                        text-align: justify;
                     }
 
+                    .like_duskike{
+                        margin: 20px 0;
+                                span{display: block;
 
-                    span{display: block;
+                                float: left;
+                                width: 50%;
+                                text-align: center;
+                            
 
-                        float: left;
-                        width: 33%;
-                        text-align: center;
 
+                                &:nth-child(2){
 
-                        &:nth-child(2){
-
-                            &:hover{ 
-                                i{
-                                
-                                    color:$green;
+                                    &:hover{ 
+                                        i{
+                                        
+                                            color:$green;
+                                        }
+                                    }
                                 }
-                            }
-                        }
 
-                        &:nth-child(4){
+                                &:nth-child(3){
+
+                        
+
+                                    &:hover{
+                                        i{
+                                        
+                                            color:$pink;
+                                        }
+                                    }
+                                }
+
+                                i{
+                                    font-size: 2.5rem;
+                                    transition: all .5s ease-in;
+                                    color: rgba(0, 0, 0, 0.5);
+                                    cursor: pointer;
+                                }
+
+                            
+                            
+
+                            }
+
+                            &:after{
+                                content:'';
+                                display: block;
+                                clear: both;
+                            }
+        
+                    }
+
+                    p{
+                        margin: 0;
+                        font-size: 0.8rem;
+                        text-align: right;
+
+                        
+                    }
+                    
 
                    
-
-                            &:hover{
-                                 i{
-                                
-                                    color:$pink;
-                                }
-                            }
-                        }
-
-                        i{
-                            font-size: 2.5rem;
-                            transition: all .5s ease-in;
-                            color: rgba(0, 0, 0, 0.5)
-                        }
-
-                       
-                       
-
-                    }
-
-                    &:after{
-                        content:'';
-                        display: block;
-                        clear: both;
-                    }
-
 
 
                 }
