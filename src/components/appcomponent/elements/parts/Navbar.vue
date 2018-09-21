@@ -1,12 +1,20 @@
 <template>
-    <nav>
-        <ul>
-            <li>My Area Shops</li>
-            <li v-if="isAuth">My Preffered Shops</li><!--Show Loged in users-->
-            <li v-if="!isAuth">Login</li>
-             <li v-if="!isAuth"><router-link to="{register}">Register</router-link> </li>
+    
 
-        </ul>
+      <nav>
+            <ul>
+            <li><router-link to="{home}">All Shops</router-link></li>
+            <li><a href="#">Nearby Shops</a></li>
+            <li v-if="isAuth"><router-link to="{preferred}">My Preffered Shops</router-link></li><!--Show Loged in users-->
+            <li v-if="isAuth"><router-link to="{logout}">My Preffered Shops</router-link></li><!--Show Loged in users-->
+            <li v-if="!isAuth"><router-link to="{login}">Login</router-link></li>
+             <li v-if="!isAuth"><router-link to="{register}">Register</router-link> </li>
+        
+             </ul>
+
+       
+    <!-- { path: '/me', name: 'account',component: Account}, -->
+  
     </nav>
 </template>
 

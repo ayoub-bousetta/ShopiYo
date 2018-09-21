@@ -1,6 +1,23 @@
 <template>
-    <header>
-<Navbar />
+  
+
+    
+
+     <header>
+        <Navbar /> <!--Getting Nav-->
+
+  
+    <hgroup >
+
+                                                  
+            <h1>Shop<strong>Yo</strong></h1>  
+            <span>Laravel & VueJS Based</span>
+
+            
+                
+                
+    </hgroup>
+
     </header>
 </template>
 
