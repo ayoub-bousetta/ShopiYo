@@ -64,7 +64,7 @@ html {
         align-items: center;
         
         
-        &.shops{//Shop Css
+        &.shops,&.preferred{//Shop Css
 
             .box{
                 @extend %boxingStyle;
@@ -226,6 +226,73 @@ html {
             }
 
             
+        }
+
+
+        &.preferred{
+            .box{
+
+                 .box_foot{
+                .like_duskike{
+                    margin-bottom: 0px;
+                                        display: flex;
+                        justify-content: center;
+                        justify-content: center;
+                        align-items: center;
+
+                            span{
+
+
+                            &:nth-child(1){
+
+                                    &:hover{
+                                        i{
+                                    
+                                            color:$pink;
+                                        }
+                                    }
+                                   
+                                
+
+                            }
+
+                            &:nth-child(2){
+
+                                font-size: 1rem;
+
+                                b{
+                                    font-size: 1.5rem;
+                                }
+
+                              
+                            }
+                        
+
+                            
+                         
+
+                            i{
+                                color:$pink;
+                                
+                            }
+
+                        
+                        
+
+                        }
+
+                        
+    
+                }
+
+           
+
+               
+
+
+            }
+            }
+           
         }
 
 
