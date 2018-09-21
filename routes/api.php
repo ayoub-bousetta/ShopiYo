@@ -43,8 +43,8 @@ $router->group(['namespace'=>'Account','prefix' => 'account','middleware' => 'ap
 
 
     //Admin
-    $router->post('/editshop','ShopsControllers@store');
-    $router->post('/addshop','ShopsControllers@store');
+    // $router->post('/editshop','ShopsControllers@store');
+    // $router->post('/addshop','ShopsControllers@store');
 
 
      /*
