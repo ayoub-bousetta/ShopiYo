@@ -136,9 +136,59 @@ html {
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
+        position: relative;
         
         
         &.shops,&.preferred{//Shop Css
+
+            #filter{
+                position: absolute;
+                top: 0px;width: 100%; height: 60px;
+                border-bottom: 1px solid $yellow;
+
+                input{
+                    padding-left: 10px;
+                    width: 100%;
+                    height: 100%;
+                    border: 0px;
+                    
+                    font-size: 1.5rem;
+
+
+                }
+
+                span{
+                   i {font-size: 3rem; line-height: 60px;cursor: pointer;color: $pink}
+                    position: absolute;
+                    top: 0;
+                    right: 4px;
+                    height: 100%;
+                    display: block;
+
+                }
+
+               
+               
+            }
+
+            h2{    font-size: 2.5rem;
+                margin: 5rem 0px;
+                text-align: center;
+                position: relative;
+                font-weight: 300;
+                 &:after {
+                    border-bottom: .2rem solid $yellow;
+                    
+                    content: "";
+                    display: block;
+                    left: 0;
+                    right: 0;
+                    margin:0 auto;
+                    position: absolute;
+                    bottom: -11px;
+                    width: 3rem;
+                }
+            }
 
             .box{
                 @extend %boxingStyle;
@@ -373,7 +423,7 @@ html {
 
         &.login{//Login Css
 
-            background: #f1f1f1;
+            background: #f8f8f8;
 
             .title_form{    margin-bottom: 10px;
                    h2{
