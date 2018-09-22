@@ -16,12 +16,12 @@ const store =  new Vuex.Store({
             shops: [],
             likedShop:false,
             Dislike:false,
-            DislikeAddRevok:false,
          
+            profileUser:localStorage.getItem("user"),
             userInfo:[],
             error:[],
             //User Status
-            isToken: localStorage.getItem("token"),
+            isToken: localStorage.getItem("token")//localStorage.getItem("token"),
          
          },
 
@@ -36,23 +36,27 @@ const store =  new Vuex.Store({
                 .then(shops => {
                     commit('GET_SHOPS', shops)
                  })
+
+               
+
             },
 
-            FilterShops ({ commit,state },distance) {
+            FilterShops ({ commit,state },dataUrl) {
+
+           
                 axios
-                  .get('/shops/'+distance, {
+                  .get(dataUrl.url+dataUrl.distance, {
                       headers: { Authorization: "Bearer " + state.isToken }
                     })
                   .then(r => r.data)
                   .then(shops => {
-                    console.log(shops)
 
                         //Validation
                      if (typeof shops.errors !== 'undefined' && Object.keys(shops.errors).length > 0 ) {
                         //Error
                      
                         commit('ERRORS', shops.errors)
-                        commit('GET_FILTRED_SHOPS', shops.shops)
+                       commit('GET_FILTRED_SHOPS', shops.shops) // Remove data from view
                     }else{
                        commit('ERRORS', null)
                        commit('GET_FILTRED_SHOPS', shops.shops)
@@ -86,15 +90,15 @@ const store =  new Vuex.Store({
 
             likeShop ({ commit,state },Shopid) {
               
-                console.log(state.isToken);
+               // console.log(state.isToken);
                 axios
                   .get('/account/shop/vote/'+Shopid+'-u',  {
                     headers: { Authorization: "Bearer " + state.isToken }
                   })
                   .then(r => r.data)
                   .then(shops => {
-                      commit('LIKE_Add_REVOKE')
-                      commit('LIKE_SHOP', Shopid)
+                   
+                     commit('LIKE_SHOP', Shopid)
                    })
                    
               },
@@ -102,16 +106,19 @@ const store =  new Vuex.Store({
                 //Dislike Action
               disLikeShop ({ commit,state },Shopid) {
               
-                console.log(state.isToken);
                 axios
-                  .get('/account/shop/vote/'+Shopid+'-d',  {
+                  .get('/account/shop/vote/'+Shopid.id+'-d',  {
                     headers: { Authorization: "Bearer " + state.isToken }
                   })
                   .then(r => r.data)
                   .then(shops => {
 
-                    commit('DiSLIKE_Add_REVOKE')
-                    commit('DISlIKE_SHOP', Shopid)
+                    console.log(shops)
+                   
+                    
+
+                   // commit('DiSLIKE_Add_REVOKE')
+                    commit('DISlIKE_SHOP', [Shopid.id,shops.sucess])
                   
                       
                    })
@@ -157,19 +164,20 @@ const store =  new Vuex.Store({
                   })
                   .then(r =>  {
 
+                    
+                     
+
                     //Validation
                      if (typeof r.data.errors !== 'undefined' && Object.keys(r.data.errors).length > 0 ) {
                          //Error
                          commit('ERRORS', r.data.errors)
                      }else{
                         
-                        setTimeout(() => { //To show ONCF
+                       commit("LOGIN",r.data);
                             
-                            commit("LOGIN",r.data);  //Set Token
-                            
-                            resolve();
-                          }, 1000);
 
+                            
+                          commit("PROFILE",r.data.user); 
                      }
                    
              
@@ -213,68 +221,120 @@ const store =  new Vuex.Store({
               })
 
 
+              
+
+
 
               
               },
 
               GET_FILTRED_SHOPS (state, shops){
-                state.shops = shops
+                let length = 30;
+                
+                console.log(typeof shops !== 'undefined' )
+
+                if (typeof shops !== 'undefined' && shops.length>0) {
+                   state.shops = shops.map(shop=> {
+  
+  
+                  //Limit lenght
+                  //ufirst only
+                  shop.address =shop.address.substring(0, length) + "..." 
+                  shop.address = shop.address.toLowerCase()
+  
+                      
+                  return shop
+                })
+                }else{
+                  state.shops=shops
+                }
+               
               },
 
 
               //Shops That loved :)
               PREFERRED_SHOP (state, shops) {
-                state.shops = shops
+                let length = 30;
+
+                state.shops = shops.map(shop=> {
+  
+  
+                  //Limit lenght
+                  //ufirst only
+                  shop.address =shop.address.substring(0, length) + "..." 
+                  shop.address = shop.address.toLowerCase()
+  
+                      
+                  return shop
+                })
               
               },
 
-              LIKE_Add_REVOKE(state){
-                state.likedShop =!state.likedShop
+            //   LIKE_Add_REVOKE(state){
+            //     state.likedShop =!state.likedShop
                 
-            },
+            // },
           
 
             //Shops That i like will be filtred 
             LIKE_SHOP (state, likedShopId) {
                 
 
-                if(state.likedShop == true){
 
                     state.shops = state.shops.filter(shop=> {
                         return shop.id != likedShopId ;
                       })
 
-                }
-                      
-                      
-                      
+               
             },
+
 
             
-            DiSLIKE_Add_REVOKE(state){
-                state.DislikeAddRevok =!state.DislikeAddRevok
-                
-            },
+          
             DISlIKE_SHOP(state, deslikesShop){
 
+            
                 state.shops = state.shops.map(shop=> {
-                    if (shop.id == deslikesShop  ) {
-                        if (state.DislikeAddRevok ==true) {
-                            shop.dislikes_count++
-                            
+                  
 
-                        }else{
-                            shop.dislikes_count--
-                        }
+                  
+                  
 
+                  
+                    if (shop.id == deslikesShop[0]  ) {
+
+                      switch (deslikesShop[1]) {
+                        case 'delete_vote' || 'update_vote':
+                        shop.dislikes_count--
+                        shop.vote_count--
+                       
+
+                        shop.shops_i_hate = shop.shops_i_hate.filter(function(item) { 
+                          return item !== shop.id
+                         })
+                      
                         
+                          break;
+
+                          case 'new_vote':
+                          shop.dislikes_count++
+                          shop.vote_count++
+                          //console.log(shop.shops_i_hate)
+                          shop.shops_i_hate.push(shop.id);
+
+                            break;
+                      
+                      }
+                      
+                      
+     
                     }
                     return shop
                   })
 
 
 
-                  //console.log(result);
+                  console.log(state.shops)
 
 
             },
@@ -293,22 +353,34 @@ const store =  new Vuex.Store({
                  
             },
 
+            
           
             //Welcome again :)
             LOGIN(state,userAuth) {
-               // state.isToken = true;
+                localStorage.setItem("token",userAuth.access_token)
+              
                 state.loading = false;
                 state.errors = null;
-                state.isToken=localStorage.setItem("token",userAuth.access_token);
-             
-                       
+                //state.isToken=localStorage.setItem("token", "JWT");
+                
+                state.isToken=localStorage.getItem("token")//localStorage.setItem("token",userAuth.access_token);
+                    
             },
+
+            //Profile
+            PROFILE(state,profile) {
+
+              localStorage.setItem("user",profile.id)
+              state.profileUser = localStorage.getItem("user");
+              
+         },
 
          
 
             //See You soon :)
             LOGOUT(state) {
-               state.isToken = localStorage.removeItem("token");
+               state.isToken = localStorage.getItem("token");
+               localStorage.clear();
              },
 
 
@@ -330,9 +402,7 @@ const store =  new Vuex.Store({
                 return state.likedShop;
             },
 
-            dislikeShop:state=>{
-                return state.DislikeAddRevok 
-            },
+         
 
             registerUser:state=>{
                return state.userInfo;
@@ -345,6 +415,10 @@ const store =  new Vuex.Store({
 
             isToken: state => {
                 return state.isToken
+               },
+
+            profileUser: state => {
+                return state.profileUser
                },
 
             isAuth: state => {

@@ -9,12 +9,9 @@ export default {
   mounted () {
 
 
-
     this.$store.dispatch('LogOut');
 
-    
-
-    
+       this.$router.push('/')  
   },
   
 }

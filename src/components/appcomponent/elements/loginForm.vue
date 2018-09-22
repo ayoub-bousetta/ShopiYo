@@ -61,19 +61,8 @@ data(){
                       
                             
                             this.$store.dispatch('AuthRequest', this.dataArray).then(() => {
-                               
-                  if (this.$store.getters.Errors !== 'undefined' &&  this.$store.getters.Errors != null) {
-
-                            Object.keys(this.$store.getters.Errors).forEach(key => {
-                            console.log(this.$store.getters.Errors[0]);   // Errors
-                        });
-
-                        
-                    }else{
-                        console.log("You're good you can get in") // Errors
-                        //this.$router.push('/')
-
-                    }
+                                this.$router.push('/')  
+                  
                             })
                             
                         

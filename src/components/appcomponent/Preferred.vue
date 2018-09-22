@@ -2,8 +2,8 @@
  
 
      <section class="preferred">
-                <FilterShop/>
-                
+                <FilterShop  v-show='shofilter' />
+              
                 <div class="container">
 
                         <h2>Shops from our DB</h2>
@@ -12,7 +12,7 @@
 
                         <div class="col-md-4" v-for="shop in loadShops" :key="shop.id">
                             <div class="box">
-                                <h3>{{shop.name}} <span>Votes: {{shop.vote_count}}</span></h3>
+                                <h3>{{shop.name}} </h3>
                                 <div class="imgs">
 
                                         <img src="https://www.soc.tas.edu.au/wp-content/uploads/college-shop-internal.jpg" alt="">
@@ -53,13 +53,16 @@
 
 <script>
 
+import FilterShop from '@/components/appcomponent/elements/shopFilter.vue';
 
 export default {
   
   name: 'PreferredShop',
 
  
-
+ components:{
+    FilterShop
+  },
   mounted () {
 
 
@@ -70,12 +73,33 @@ export default {
 
     
   },
-  
+
+  data(){
+
+    return{
+      shofilter:false
+      
+
+    }
+  },
+ 
 
  computed: {
 
     
-   loadShops(){return this.$store.getters.loadShops;},
+   loadShops(){
+
+      
+      if (this.$store.getters.loadShops.length >0) {
+        this.shofilter=true
+        return this.$store.getters.loadShops;
+      }else{
+        this.shofilter=false
+      }
+     
+
+
+     },
  
 
  },
@@ -99,6 +123,16 @@ export default {
 
 
 
-<style scoped>
+<style scoped >
+.preferred{
+  height:100%;
+}
+
+
+  
+  address{
+    text-transform: capitalize;
+  }
 
 </style>
+

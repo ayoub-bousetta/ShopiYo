@@ -23,17 +23,18 @@
 
 
                                     <div class="like_duskike">
+                                      
 
-                                          <span><i class="material-icons " :class="{ liked: likedShop !=false }">
-                                            sentiment_satisfied_alt
-                                            </i><small>{{shop.likes_count}}</small></span>
+
+                                          <span><i class="material-icons " v-on:click="Like(shop.id)" >
+                                            favorite_border
+                                            </i></span>
                                             
-                                    <span><i class="material-icons " :class="{ disliked: likedShop !=false }"   >
+                                    <span><i class="material-icons " :class="shop.shops_i_hate.indexOf(shop.id) > -1 ? 'disliked' : 'waiting'"  v-on:click="disLike(shop.id)" >
                                             sentiment_very_dissatisfied
                                             </i><small>{{shop.dislikes_count}}</small></span>
 
-                                             <!-- <button v-on:click="Like(shop.id)"  :class="{ Voted: likedShop !=false }" >Like</button>
-      <button v-on:click="disLike(shop.id)" :class="{ Voted: dislikedShop !=false }">Dislike</button> -->
+                                      
     
                                     </div>
                                   
@@ -67,6 +68,7 @@ export default {
   },
  
 
+
   mounted () {
 
 
@@ -80,33 +82,73 @@ export default {
   
 
 data(){
-  return {dislikedShop:false,likedShop:false};
+  return {
+    dislikedShop:false,
+    dataArray:[]
+   };
 },
  computed: {
 
+    checkvote(){
     
-   loadShops(){return this.$store.getters.loadShops;},
+     
+
+    },
+   loadShops(){
+     
+     return this.$store.getters.loadShops;
  
+     },
 
  },
 
   methods:{
-    //Always Use noraml function -> Not like react 
     Like(id){
-      this.$store.dispatch('likeShop',id).then(resp=> {
-        console.log('Store added to your Prefered')
+
+      if (this.$store.getters.isAuth) {
+      this.$store.dispatch('likeShop',id).then(()=> {
+
+        
+       // console.log('Store added to your Prefered')
       }
       )
+
+       }else{
+           return false
+         }
       
     },
     
+ 
+
+    
+    
 
      disLike(id) {
-       this.$store.dispatch('disLikeShop',id).then(resp=> {
-        this.dislikedShop = this.$store.getters.dislikeShop;
-      }
-      )
-    }
+
+  
+
+       if (this.$store.getters.isAuth) {
+
+         this.dataArray={
+                                "id":id,
+                                "dislike":this.dislikedShop,
+                            }
+          this.$store.dispatch('disLikeShop',this.dataArray).then(()=> {
+                 // this.dislikedShop = this.$store.getters.dislikeShop;
+
+                 console.log(this.$store.getters.profileUser)
+                this.dislikedShop=true; 
+                  //console.log(this.$store.getters.dislikeShop);
+            })
+         }else{
+           return false
+         }
+      
+        },
+
+
+
 
   },
  
@@ -121,14 +163,7 @@ data(){
   height:100%;
 }
 
- p{
-       position: absolute;
-    bottom: 10px;
-    right: 12px;
-  }
-    .box{
-    min-height: 453px; position: relative;
-  }
+
   address{
     text-transform: capitalize;
   }

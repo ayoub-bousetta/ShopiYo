@@ -21,9 +21,14 @@ const router = new VueRouter({
   mode: 'history'
 });
 
-new Vue({store,
-  render: h => h(App),router: router
+new Vue({router:router,store:store,
+  render: h => h(App)
 }).$mount('#app')
+
+
+
+
+
 
 
 //axios.defaults.headers.common['Accept'] = 'application/json'
