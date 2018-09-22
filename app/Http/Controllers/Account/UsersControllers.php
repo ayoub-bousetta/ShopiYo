@@ -22,6 +22,80 @@ class UsersControllers extends Controller
 
   
 
+      /**
+     * Login And Execut respondWithToken() if true
+     */
+    function logmein(Request $request){
+
+      
+
+        dd(Auth::check());
+ 
+ 
+         if (Auth::check()) {
+             $user = Auth::user();
+         
+             return response()->json(compact('user'));
+         }else{
+ 
+ 
+             $email=$request->input('email');
+             $password= $request->input('password');
+            
+ 
+ 
+             //Check if validate 
+ 
+             $validator = Validator::make($request->all(), [
+                 'email' => 'required|string|email|max:255',
+                 'password' => 'required|string|min:6',
+               
+             
+             ]);
+             if ( !$validator->fails()) {
+ 
+                 //Attempt conenction / while user is active by default 
+ 
+                 $active = 1;
+ 
+              $credentials=['email' => $email, 'password' => $password, 'active' => $active ];
+              
+ 
+             if ($token = Auth::attempt($credentials)) {
+             // Authentication passed...
+             $user = Auth::user();
+             return $this->respondWithToken($token);
+                 }else{
+                   
+                     return response()->json(['errors' => ['Wrong username/password combination.',401]]);
+ 
+                 }
+ 
+ 
+             }else{
+ 
+               
+                   
+                 return response()->json(['errors'=>$validator->errors()]);
+ 
+            
+ 
+             }
+ 
+              
+             
+ 
+ 
+         }
+ 
+         
+       
+ 
+        
+ 
+     }
+ 
+ 
 
      /**
      * Get the authenticated User.
@@ -73,7 +147,8 @@ class UsersControllers extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user'=> Auth::user(),
         ]);
     }
 

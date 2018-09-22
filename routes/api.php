@@ -43,8 +43,8 @@ $router->group(['namespace'=>'Account','prefix' => 'account','middleware' => 'ap
 
 
     //Admin
-    // $router->post('/editshop','ShopsControllers@store');
-    // $router->post('/addshop','ShopsControllers@store');
+    $router->post('/editshop','ShopsControllers@store');
+    $router->post('/addshop','ShopsControllers@store');
 
 
      /*
@@ -52,6 +52,7 @@ $router->group(['namespace'=>'Account','prefix' => 'account','middleware' => 'ap
     */
     $router->post('logout',['as'=>'logout','uses'=>'UsersControllers@logmeout']);
     $router->post('refresh', ['as'=>'refresh','uses'=>'UsersControllers@refresh']);
+    $router->post('me', ['as'=>'profile','uses'=>'UsersControllers@me']);
 
  
 
@@ -67,10 +68,6 @@ $router->group(['namespace'=>'Account','prefix' => 'account','middleware' => 'ap
     //My Liked Shops
     $router->get('/preferred',['as'=>'preferred','uses'=>'ShopsControllers@preferred']);
 
-
-    //My Liked Shops with
-    $router->get('/preferred/{distance?}',['as'=>'preferred','uses'=>'ShopsControllers@preferred']);
-
     //Remove it from my Liked list
     $router->delete('/preferred/remove/{id}',['as'=>'remove','uses'=>'VotesControllers@remove']);
      
@@ -82,5 +79,5 @@ $router->group(['namespace'=>'Account','prefix' => 'account','middleware' => 'ap
 
 //Jon Doe
 Route::get('/shops/{distance?}', 'ShopsControllers@index');
-Route::post('login',['as'=>'login','uses'=>'UsersControllers@logmein']);
-Route::post('create',['as'=>'create','uses'=>'UsersControllers@store']);
+Route::post('/login','UsersControllers@logmein');
+Route::post('/create','UsersControllers@store');
