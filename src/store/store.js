@@ -5,7 +5,7 @@ import VueAxios from 'vue-axios'
 
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
-Vue.axios.defaults.baseURL = `http://127.0.0.1:8000/api/`;
+Vue.axios.defaults.baseURL = `http://shopiyoapi.aubbusta.com/api/`;
 
 
 
@@ -302,7 +302,6 @@ const store =  new Vuex.Store({
               GET_FILTRED_SHOPS (state, shops){
                 let length = 30;
                 
-                console.log(typeof shops !== 'undefined' )
 
                 if (typeof shops !== 'undefined' && shops.length>0) {
                    state.shops = shops.map(shop=> {
