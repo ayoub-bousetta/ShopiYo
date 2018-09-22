@@ -54,18 +54,21 @@ class ShopsControllers extends Controller
           foreach ($nearShops as $key => $nearshop) {
 
 
-            if (Auth::check()) {
-
-                $shopids=[];
+            $shopids=[];
                 $shopidsDown=[];
 
+            if (Auth::check()) {
+
+                
+
                 $userVotes=Vote::all()->where('user_id', Auth::user()->id);
+                
 
              
 
                 if($userVotes->where('vote', '=', 1)->count() > 0){
 
-                    foreach ($$userVotes->where('vote', '=', 1) as $userVote) {
+                    foreach ($userVotes->where('vote', '=', 1) as $userVote) {
                         $shopids[]=$userVote->shop_id;
                     }
                    
@@ -97,7 +100,8 @@ class ShopsControllers extends Controller
   
                    
             
-            $shopidsDown= (count($shopidsDown)>0) ? $shopidsDown : 0 ;
+
+
                
                if ($findshop->count()>0) {
                  
