@@ -6,7 +6,7 @@
               
                 <div class="container">
 
-                        <h2>Shops from our DB</h2>
+                        <h2>Shops that you liked</h2>
                     
                <div class="row">
 
@@ -109,10 +109,7 @@ export default {
     
 
      remove(id) {
-       this.$store.dispatch('likeShop',id).then(resp=> {
-       
-      }
-      )
+       this.$store.dispatch('likeShop',id)
     }
 
   },
@@ -121,18 +118,4 @@ export default {
 </script>
 
 
-
-
-<style scoped >
-.preferred{
-  height:100%;
-}
-
-
-  
-  address{
-    text-transform: capitalize;
-  }
-
-</style>
 

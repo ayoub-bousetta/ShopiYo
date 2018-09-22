@@ -21,6 +21,36 @@ const router = new VueRouter({
   mode: 'history'
 });
 
+// Check routes requiresAuth/requiresVisitor
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+  
+    if (!store.getters.isAuth) {
+      next({
+        name: 'login',
+      })
+    } else {
+      next()
+    }
+  } else if (to.matched.some(record => record.meta.requiresVisitor)) {
+  
+    if (store.getters.isAuth) {
+      next({
+        name: 'home',
+      })
+    } else {
+      next()
+    }
+  } 
+
+
+
+})
+
+
+
+
+
 new Vue({router:router,store:store,
   render: h => h(App)
 }).$mount('#app')

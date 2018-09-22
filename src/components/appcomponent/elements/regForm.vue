@@ -77,8 +77,3 @@ export default {
 }
 </script>
 
-<style scoped>
-.login {
-    background: #efeceb;
-}
-</style>

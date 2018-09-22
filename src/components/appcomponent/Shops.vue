@@ -29,8 +29,9 @@
                                           <span><i class="material-icons " v-on:click="Like(shop.id)" >
                                             favorite_border
                                             </i></span>
-                                            
-                                    <span><i class="material-icons " :class="(shop.shops_i_hate.lenght > 0 && shop.shops_i_hate.indexOf(shop.id) > -1) ? 'disliked' : 'waiting'"  v-on:click="disLike(shop.id)" >
+
+ 
+                                    <span><i class="material-icons " :class="(shop.shops_i_hate == 1) ? 'disliked' : 'waiting'"  v-on:click="disLike(shop.id)" >
                                             sentiment_very_dissatisfied
                                             </i><small>{{shop.dislikes_count}}</small></span>
 
@@ -89,11 +90,7 @@ data(){
 },
  computed: {
 
-    checkvote(){
     
-     
-
-    },
    loadShops(){
      
      return this.$store.getters.loadShops;
@@ -106,12 +103,7 @@ data(){
     Like(id){
 
       if (this.$store.getters.isAuth) {
-      this.$store.dispatch('likeShop',id).then(()=> {
-
-        
-       // console.log('Store added to your Prefered')
-      }
-      )
+      this.$store.dispatch('likeShop',id)
 
        }else{
            return false
@@ -134,13 +126,7 @@ data(){
                                 "id":id,
                                 "dislike":this.dislikedShop,
                             }
-          this.$store.dispatch('disLikeShop',this.dataArray).then(()=> {
-                 // this.dislikedShop = this.$store.getters.dislikeShop;
-
-                 console.log(this.$store.getters.profileUser)
-                this.dislikedShop=true; 
-                  //console.log(this.$store.getters.dislikeShop);
-            })
+          this.$store.dispatch('disLikeShop',this.dataArray)
          }else{
            return false
          }
@@ -157,15 +143,3 @@ data(){
 
 
 
-
-<style scoped >
-.shops{
-  height:100%;
-}
-
-
-  address{
-    text-transform: capitalize;
-  }
-
-</style>

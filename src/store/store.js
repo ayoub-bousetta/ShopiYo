@@ -12,22 +12,45 @@ Vue.axios.defaults.baseURL = `http://127.0.0.1:8000/api/`;
 const store =  new Vuex.Store({
 
         state: {
+
+           //Shop
             shops: [],
             likedShop:false,
             Dislike:false,
-            Msg:'',
-            iskillNotif:false,
-         
+
+            
+           
+          
+            //Profile
             profileUser:localStorage.getItem("user"),
             userInfo:[],
+            isToken: localStorage.getItem("token"),
 
+            //Notif
             msgType:[],
             notification:[],
+            Msg:'',
+            iskillNotif:false
             
-            //User Status
-            isToken: localStorage.getItem("token")
+            
          
          },
+
+
+
+
+         /********
+          * 
+          * 
+          * 
+          *
+          ******* ACTIONS ******
+          * 
+          * 
+          * 
+          * 
+          * ****/
+
 
 
          actions: {
@@ -35,7 +58,7 @@ const store =  new Vuex.Store({
 
 
               //for both Auth and non
-             return axios
+              axios
                 .get('/shops', {
                     headers: { Authorization: "Bearer " + state.isToken }
                   })
@@ -44,7 +67,7 @@ const store =  new Vuex.Store({
 
                   if (!state.isToken) {
 
-                    state.msg="Welcome To ShopiYa, login and start the Like journey"
+                    state.msg="Welcome To <strong>ShopiYa</strong>"
                     commit('ERRORS', [state.msg,'success'] )
                     
                   }
@@ -69,12 +92,12 @@ const store =  new Vuex.Store({
                         //Error
                      
                         
-                    state.msg="Oh_No! Nothing yet... "
+                    state.msg="<b>Oh_No</b> Nothing yet... "
                     commit('ERRORS', [state.msg,'error'] )
                          commit('GET_FILTRED_SHOPS', shops.shops) // Remove data from view
                     }else{
 
-                      state.msg="Oh_Yeay! Finally we found something... "
+                      state.msg="<b>Oh_Yeay</b> Finally we found something... "
                       commit('ERRORS', [state.msg,'success'] )
                        commit('GET_FILTRED_SHOPS', shops.shops)
 
@@ -106,8 +129,14 @@ const store =  new Vuex.Store({
                   .then(r => r.data)
                   .then(shops => {
                     
-                    state.msg="Yeay! Shop added successfully to your preferred.. "
+                    if (shops.sucess=='delete_vote') {
+                      state.msg="<b>Oh_no</b> Tell us what's wrong . " // Revoked Deslike
                     commit('ERRORS', [state.msg,'success'] )
+                      
+                    }else{
+                      state.msg="<b>Yeay</b> Shop added to your prefereed list"  //Deslike
+                      commit('ERRORS', [state.msg,'success'] )
+                    }
 
 
                      commit('LIKE_SHOP', Shopid)
@@ -127,11 +156,11 @@ const store =  new Vuex.Store({
 
 
                     if (shops.sucess=='delete_vote') {
-                      state.msg="Yeay! We know that it was a mistake. " // Revoked Deslike
+                      state.msg="<b>Yeay</b> We know that it was a mistake. " // Revoked Deslike
                     commit('ERRORS', [state.msg,'success'] )
                       
                     }else{
-                      state.msg="Oh_No! A Dislike, tell us what's wrong "  //Deslike
+                      state.msg="<b>Oh_No</b> A Dislike, <br> Tell us what's wrong whit this Store "  //Deslike
                       commit('ERRORS', [state.msg,'success'] )
                     }
                    
@@ -157,14 +186,14 @@ const store =  new Vuex.Store({
                          //ErrorHandlers
                          //commit('ERRORS', r.data.errors)
 
-                         state.msg="Ops! Email already taken!"
+                         state.msg="<b>Ops</b> Email already taken! Use another one."
                          commit('ERRORS', [state.msg,'error'] )
 
 
                      }else{
                         commit('ERRORS', null)
                         
-                        state.msg="Yes! See you inside..."
+                        state.msg="<b>Yeay</b> See you inside..."
                         commit('ERRORS', [state.msg,'success'] )
                         commit('REGISTER_USER',  r.data)
 
@@ -189,13 +218,13 @@ const store =  new Vuex.Store({
                      if (typeof r.data.errors !== 'undefined' && Object.keys(r.data.errors).length > 0 ) {
                          //Error
 
-                         state.msg="The Email or Password that you've entered doesn't match any account."
+                         state.msg="<b>Ops</b> The Email or Password doesn't match any account."
                          commit('ERRORS',[state.msg,'error'])
                      }else{
                         
                         commit("LOGIN",r.data);
                         commit("PROFILE",r.data.user); 
-                        state.msg="Yeay! Welcome To ShopiYa"
+                        state.msg="<b>Yeay</b> Welcome To <strong>ShopiYa</strong>"
                         commit('ERRORS', [state.msg,'success'] )
                      }
                    
@@ -215,7 +244,7 @@ const store =  new Vuex.Store({
                 localStorage.removeItem("user");
                 localStorage.clear();//Making sure :)
 
-                state.msg="Bye! We will love to see you soon"
+                state.msg="<b>Bye</b> Hope we can see you soon"
                 commit('ERRORS', [state.msg,'success'] )
                 
                 commit('LOGOUT');
@@ -233,20 +262,34 @@ const store =  new Vuex.Store({
           },
 
 
+
+          
+         /********
+          * 
+          * 
+          * 
+          *
+          ******* MUTATIONS ******
+          * 
+          * 
+          * 
+          * 
+          * ****/
+
          mutations: {
 
             //Shops Near me Aka  :)
             GET_SHOPS (state, shops) {
                 
 
-             let length = 30;
+             
 
               state.shops = shops.map(shop=> {
 
 
                 //Limit lenght
                 //ufirst only
-                shop.address =shop.address.substring(0, length) + "..." 
+                shop.address =shop.address.substring(0, 30) + "..." 
                 shop.address = shop.address.toLowerCase()
 
                     
@@ -308,20 +351,16 @@ const store =  new Vuex.Store({
             state.shops = state.shops.map(shop=> {
 
                  if (shop.id == deslikesShop[0]  ) {
+               
 
                       switch (deslikesShop[1]) {
                         case 'delete_vote' || 'update_vote':
                         shop.dislikes_count--
                         shop.vote_count--
-                       
-                        //Deslike Detector
-                        if (shop.shops_i_hate.lenght >0) {
-                          shop.shops_i_hate = shop.shops_i_hate.filter(function(item) { 
-                            return item !== shop.id
-                           })
+                        shop.shops_i_hate =0
                         
-                          
-                        }
+                       
+                      
                        
                         
                           break;
@@ -329,8 +368,7 @@ const store =  new Vuex.Store({
                           case 'new_vote':
                           shop.dislikes_count++
                           shop.vote_count++
-
-                          shop.shops_i_hate.push(shop.id);
+                          shop.shops_i_hate =1
 
                             break;
                       
@@ -393,6 +431,20 @@ const store =  new Vuex.Store({
 
            
          },
+
+
+
+          /********
+          * 
+          * 
+          * 
+          *
+          ******* Getters ******
+          * 
+          * 
+          * 
+          * 
+          * ****/
 
          getters:{
 

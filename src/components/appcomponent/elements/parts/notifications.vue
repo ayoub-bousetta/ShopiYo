@@ -1,10 +1,11 @@
 <template >
-    <div class="alert" v-show="!hideShow" v-if="msgNotif" >
+    <div class="alert" :class="(msgNotif[1]== 'success') ? 'success' : 'error'" v-show="!hideShow" v-if="msgNotif" >
      <!--You Can loop to show multi msg-->
-        <p  :class="msgNotif[1]">{{msgNotif[0]}}</p>
+        <p v-html="msgNotif[0]"></p>
 
-        <button v-on:click="KillNotifications">hide</button>
-
+      <i v-on:click="KillNotifications" class="material-icons">
+                clear
+                </i>
 
     </div>
 </template>
@@ -64,26 +65,16 @@ computed:{
 </script>
 
 
-
-
-
 <style scoped>
-.alert{
-    position: absolute;
-    width: 250px;
-    height: 50px;
-   
-    z-index: 40;
-      top: 20%;
-    right: 0px;
-
+p {
+ 
+    font-size: 0.9rem;
+    text-align: center;
 }
 
-  .alert  p{
-        background-color: #be4b49;
-    border: 0;
-    border-radius: 2px;
-    box-shadow: 0 0 0 1px rgba(139, 3, 0, .75), 0 1px 10px rgba(0, 0, 0, .35);
-    color: #fff;
-    }
+b{
+      display: block;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
 </style>

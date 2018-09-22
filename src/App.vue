@@ -1,10 +1,11 @@
 <template>
   <div id="app">
+     <Notifs />
     
     <Header/>
   <router-view></router-view>
      <Footer/>
-       <Notifs />
+      
   </div>
 </template>
 
@@ -22,3 +23,10 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+#app{
+  position: relative;
+}
+</style>

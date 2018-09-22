@@ -78,8 +78,3 @@ data(){
 </script>
 
 
-<style scoped>
-.login {
-    background: #efeceb;
-}
-</style>
