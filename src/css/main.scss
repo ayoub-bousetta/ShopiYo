@@ -5,6 +5,7 @@ $fsize:18px;
 $pink:#FD466A;
 $yellow:#ffa150  ;
 $green:#78cdd1  ;
+$greenErr:#3eb489  ;
 $fsmobile:16px;
 $bp:1290px;
 $fontfam:'Open Sans', sans-serif;
@@ -39,11 +40,55 @@ html {
     background: #f1f1f1 ;
     background-attachment: fixed;
     background-repeat: repeat-x;
+    position: relative;
         a,input,button{
             outline: 0px!important;
             border: 0px;
         }
 
+
+
+        
+        .alert{
+            border: 0;
+            position: fixed;
+            border-radius: 8px;
+            max-width: 250px;
+            width: 100%;
+            z-index: 20;
+            bottom: 30%;right:20px;
+
+            transition: background-color .2s;
+            
+                    animation: alertshow 0.5s ease-in-out;   
+                    
+
+            &.success{
+                background: $greenErr
+                box-shadow: 0 1px 2px  rgba(62,180,137,0.8);
+
+            }
+
+            &.error{
+                background: $pink;
+                box-shadow: 0 1px 2px  rgba(253,45,86,0.8);
+            }
+            p{
+                padding: 10px;
+                color: #fff;
+                position: relative;
+                font-size: 0.85rem;
+               
+            }
+            i{
+                position: absolute;
+                top: 10px;
+                right: 10px;color: #fff;
+                font-size: 0.9rem;
+                cursor: pointer;
+                z-index: 21;
+            }
+        }
       
     header{
      
@@ -129,7 +174,8 @@ html {
     }
 
     section{
-        height: 100vh;
+        min-height: 100vh;
+        height: 100%;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-wrap: wrap;
@@ -268,7 +314,7 @@ html {
                         font-size: 1rem;
                         font-style: normal;
                         margin: 15px 0px;
-                        text-align: justify;
+                        text-align: justify; text-transform: capitalize;
                     }
 
                     .like_duskike{
@@ -423,7 +469,7 @@ html {
 
         &.login{//Login Css
 
-            background: #f8f8f8;
+            background: #efeceb;
 
             .title_form{    margin-bottom: 10px;
                    h2{
@@ -545,30 +591,24 @@ html {
 
 
 
-
-@keyframes pulse {
+@keyframes alertshow {
     0% {
-        -moz-box-shadow: 0 0 0 0 rgba(255,161,80,0);
-        box-shadow: 0 0 0 0 rgba(255,161,80,0);
+        right:-150px
         
       }
 
     20% {
-        -moz-box-shadow: 0 0 0 0 rgba(255,161,80,0.5);
-        box-shadow: 0 0 0 0 rgba(255,161,80,0.5);
+        right:-100px;
         
       }
     50% {
-        -moz-box-shadow: 0 0 0 10px rgba(255,161,80,0);
-        box-shadow: 0 0 0 10px rgba(255,161,80,0);
+        right:-50px;
     }
     70% {
-        -moz-box-shadow: 0 0 0 0 rgba(255,161,80,0.5);
-        box-shadow: 0 0 0 0 rgba(255,161,80,0.5);
+        right:-25px;
         
       }
     100% {
-        -moz-box-shadow: 0 0 0 0 rgba(255,161,80,0);
-        box-shadow: 0 0 0 0 rgba(255,161,80,0);
+        right:20px
     }
   }
