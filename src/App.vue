@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import Home from '@/components/HelloWorld.vue'
+import Home from '@/components/ShopiYa.vue'
 import Shops from '@/components/appcomponent/Shops.vue';
-import Header from '@/components/appcomponent/elements/header.vue';
-import Footer from '@/components/appcomponent/elements/footer.vue';
+import Header from '@/components/appcomponent/elements/parts/header.vue';
+import Footer from '@/components/appcomponent/elements/parts/footer.vue';
 import Notifs from '@/components/appcomponent/elements/parts/notifications.vue';
 
 export default {

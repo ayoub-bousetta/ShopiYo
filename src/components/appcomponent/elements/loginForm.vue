@@ -50,6 +50,19 @@ data(){
          
         }
     },
+
+mounted () {
+
+
+
+    this.$store.dispatch('KillNotifications');
+
+    
+
+    
+  },
+ 
+ 
       methods:{
                 logMein(){
 

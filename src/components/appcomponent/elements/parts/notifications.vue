@@ -65,16 +65,24 @@ computed:{
 </script>
 
 
-<style scoped>
-p {
+<style>
+.alert p {
  
     font-size: 0.9rem;
     text-align: center;
 }
 
-b{
+.alert b{
       display: block;
     font-size: 1rem;
+    font-weight: 600;
     margin-bottom: 8px;
 }
+
+.alert {
+   
+    -webkit-transition: background-color .0s!important;
+    transition: background-color .0s!important;
+    -webkit-animation: alertshow 0.01s ease-in!important;
+    animation: alertshow 0.1s ease-in !important;}
 </style>

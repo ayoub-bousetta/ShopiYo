@@ -1,8 +1,8 @@
 //import Preferred from './components/showBlogs.vue';
 import LogForm from './components/appcomponent/elements/loginForm.vue';
 import RegForm from './components/appcomponent/elements/regForm.vue';
-import logOut from './components/appcomponent/elements/parts/Logout.vue';
-import Home from './components/HelloWorld.vue'
+import logOut from './components/appcomponent/elements/Logout.vue';
+import Home from './components/ShopiYa.vue'
 import PreferredShop from './components/appcomponent/Preferred.vue';
 
 export default [

@@ -68,8 +68,7 @@ export default {
 
 
     this.$store.dispatch('PreferredShop');
-
-    
+  this.$store.dispatch('KillNotifications');
 
     
   },
@@ -83,6 +82,9 @@ export default {
     }
   },
  
+
+
+
 
  computed: {
 

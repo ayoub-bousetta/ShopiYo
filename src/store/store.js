@@ -130,11 +130,11 @@ const store =  new Vuex.Store({
                   .then(shops => {
                     
                     if (shops.sucess=='delete_vote') {
-                      state.msg="<b>Oh_no</b> Tell us what's wrong . " // Revoked Deslike
+                      state.msg="<b>Removed</b> But why, tell us what's wrong . " // Revoked Deslike
                     commit('ERRORS', [state.msg,'success'] )
                       
                     }else{
-                      state.msg="<b>Yeay</b> Shop added to your prefereed list"  //Deslike
+                      state.msg="<b>Yeay</b> Shop added to your preferred list"  //Deslike
                       commit('ERRORS', [state.msg,'success'] )
                     }
 
@@ -160,7 +160,7 @@ const store =  new Vuex.Store({
                     commit('ERRORS', [state.msg,'success'] )
                       
                     }else{
-                      state.msg="<b>Oh_No</b> A Dislike, <br> Tell us what's wrong whit this Store "  //Deslike
+                      state.msg="<b>A Dislike</b> Tell us what's wrong whit this Store "  //Deslike
                       commit('ERRORS', [state.msg,'success'] )
                     }
                    
