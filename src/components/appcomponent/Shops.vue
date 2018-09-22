@@ -30,7 +30,7 @@
                                             favorite_border
                                             </i></span>
                                             
-                                    <span><i class="material-icons " :class="shop.shops_i_hate.indexOf(shop.id) > -1 ? 'disliked' : 'waiting'"  v-on:click="disLike(shop.id)" >
+                                    <span><i class="material-icons " :class="(shop.shops_i_hate.lenght > 0 && shop.shops_i_hate.indexOf(shop.id) > -1) ? 'disliked' : 'waiting'"  v-on:click="disLike(shop.id)" >
                                             sentiment_very_dissatisfied
                                             </i><small>{{shop.dislikes_count}}</small></span>
 

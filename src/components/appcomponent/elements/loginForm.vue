@@ -10,7 +10,7 @@
                                 <h2>Login</h2><span>No Account yet? : <router-link to="register">Create one</router-link></span>
                         </div>
                   
-
+                          
                             <form v-on:submit.prevent="logMein">
                                 <div class="form-group">
                                         <label for="usr">Email:</label>
@@ -36,8 +36,11 @@
             </section>
 </template>
 <script>
+
 export default {
     name:'LogForm',
+
+  
 
 data(){
         return{
@@ -61,15 +64,17 @@ data(){
                       
                             
                             this.$store.dispatch('AuthRequest', this.dataArray).then(() => {
-                                this.$router.push('/')  
-                  
-                            })
-                            
-                        
 
-                        }
-    }
-}
+
+                                if (this.$store.getters.Errors[1] == "success") {
+                                    this.$router.push('/')
+                                }
+                                  
+                            })
+                 }
+        }
+
+   }
 </script>
 
 

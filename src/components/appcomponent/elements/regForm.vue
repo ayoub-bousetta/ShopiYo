@@ -60,27 +60,14 @@ export default {
             }
                
             this.$store.dispatch('RegisterUser', this.dataArray).then(()=>{
-              //this.$router.push('/account/login')
+              
 
-           
-              if (this.$store.getters.Errors !== 'undefined' &&  this.$store.getters.Errors != null) {
-
-
-               
-
-                    Object.keys(this.$store.getters.Errors).forEach(key => {
-                    console.log(this.$store.getters.Errors[key]);   // Errors
-                });
-
-                  
-              }else{
-                console.log("You're good you can get in") // Errors
-                this.$router.push('/login')
-
-              }
+                                if (this.$store.getters.Errors[1] == "success") {
+                                    this.$router.push('/')
+                                }
             
              
-          })
+             })
          
 
         }

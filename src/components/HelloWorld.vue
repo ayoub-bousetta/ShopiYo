@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    
+   
    <Shops/>
 
   </div>
@@ -8,7 +8,8 @@
 
 <script>
 
-import Shops from '../components/appcomponent/Shops.vue';
+import Shops from '@/components/appcomponent/Shops.vue';
+
 export default {
   name: 'Home',
 
@@ -17,4 +18,3 @@ export default {
   }
 }
 </script>
-
