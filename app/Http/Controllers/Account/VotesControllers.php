@@ -60,15 +60,10 @@ class VotesControllers extends Controller
             }
 
 
-
-       
- 
-         
- 
      }
 
 
-
+//Improvingvote system
      function vote($id,$ud,Request $request){
 
 
@@ -105,13 +100,12 @@ class VotesControllers extends Controller
                             'vote' => $voteVal
                         ]);
 
-                        return response()->json(['success'=>"updtaed Successfully"]);
+                        return response()->json(['sucess'=>"update_vote",$checkifalreadyvoted]);
                     }else{
                         // Delete
-                       
-                        $this->remove($checkifalreadyvoted->id);
 
-                        return response()->json(['success'=>"revoked Successfully"]);
+                        $this->remove($checkifalreadyvoted->id);
+                        return response()->json(['sucess'=>"delete_vote"]);
                     }
 
                    
@@ -125,7 +119,7 @@ class VotesControllers extends Controller
     
                   $vote->save();
 
-                  return response()->json(['success'=>"Voted Successfully"]);
+                  return response()->json(['sucess'=>"new_vote",$vote]);
 
                 }
 

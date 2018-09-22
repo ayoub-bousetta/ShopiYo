@@ -52,8 +52,35 @@ class ShopsControllers extends Controller
            $shops=[];
   
           foreach ($nearShops as $key => $nearshop) {
+
+
+            if (Auth::check()) {
+
+                $shopids=[];
+
+                $userVotes=Vote::all()->where('user_id', Auth::user()->id)->where('vote', '=', 1);
+
+                if($userVotes->count() > 0){
+
+                    foreach ($userVotes as $userVote) {
+                        $shopids[]=$userVote->shop_id;
+                    }
+
+                    $findshop=Shop::with('vote')->where('id','=',$nearshop->id)->whereNotIn('id', $shopids)->get();
+                }else{
+
+                    $findshop=Shop::with('vote')->where(['id'=>$nearshop->id])->get();
+                }
+
+         
+
+            }else{
+                $findshop=Shop::with('vote')->where(['id'=>$nearshop->id])->get();
+
+            }
+
   
-                   $findshop=Shop::withCount('vote')->where(['id'=>$nearshop->id])->get();
+                   
 
                
 
@@ -69,10 +96,11 @@ class ShopsControllers extends Controller
 
 
               $findshop->map(function ($findshop) use ($nearshop,$likesDes) {
-               $findshop['distance'] = $nearshop->distance;
+               $findshop['distance'] = round($nearshop->distance);
                $findshop['likes_count'] = $likesDes['likes']->count();
                $findshop['dislikes_count'] = $likesDes['dislikes']->count();
-
+               $findshop['vote_count'] = $likesDes['dislikes']->count() + $likesDes['likes']->count();
+           
                return $findshop;
 
            });
