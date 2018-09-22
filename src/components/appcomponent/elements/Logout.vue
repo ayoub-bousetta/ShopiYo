@@ -10,8 +10,8 @@ export default {
 
 
     this.$store.dispatch('LogOut');
-
-       this.$router.push('/')  
+      this.$store.dispatch('KillNotifications');
+  this.$router.push('/')  
   },
   
 }
