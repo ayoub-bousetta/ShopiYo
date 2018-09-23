@@ -3,6 +3,8 @@ Laravel 5.7 & VueJs based - [See it live](http://shopiyo.aubbusta.com)
 
 ## Files for the challenge are located at /dist => [Index,+css+js files](https://github.com/ayoub-bousetta/ShopiYo/tree/master/dist)
 
+-> Please Consider to disable the "reduce data usage" on your Chrome (Android Browser), in order for $request->ip to work and get the real IP address instead of Google servers proxy.
+
 ### Getting Started
 
 All Files are found on this repo separated as branches, so you can get whatever you like from the project. :high_brightness:
