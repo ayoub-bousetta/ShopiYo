@@ -5,7 +5,7 @@ import VueAxios from 'vue-axios'
 
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
-Vue.axios.defaults.baseURL = `http://shopiyoapi.aubbusta.com/api/`;
+Vue.axios.defaults.baseURL = `http://shopiyoapi.aubbusta.com/api`;
 
 
 
@@ -18,7 +18,7 @@ const store =  new Vuex.Store({
             likedShop:false,
             Dislike:false,
 
-            
+            loading : false,
            
           
             //Profile
@@ -57,6 +57,8 @@ const store =  new Vuex.Store({
             loadShops ({ commit,state }) {
 
 
+              commit('loadingData')
+
               //for both Auth and non
               axios
                 .get('/shops', {
@@ -65,33 +67,37 @@ const store =  new Vuex.Store({
                 .then(r => r.data.shops)
                 .then(shops => {
 
-                  if (!state.isToken) {
+                  // if (!state.isToken) { Show some cool message
 
-                    state.msg="Welcome To <strong>ShopiYa</strong>"
-                    commit('ERRORS', [state.msg,'success'] )
+                  //   state.msg="Welcome To <strong>ShopiYa</strong>"
+                  //   commit('ERRORS', [state.msg,'success'] )
                     
-                  }
+                  // }
+
+
                  
                     commit('GET_SHOPS', shops)
+
+                   
                  })
 
             },
 
             FilterShops ({ commit,state },dataUrl) {
-
-           
+              
+              commit('loadingData')
                 axios
                   .get(dataUrl.url+dataUrl.distance, {
                       headers: { Authorization: "Bearer " + state.isToken }
                     })
                   .then(r => r.data)
                   .then(shops => {
-
+                 
                         //Validation
                      if (typeof shops.errors !== 'undefined' && Object.keys(shops.errors).length > 0 ) {
                         //Error
                      
-                        
+                       
                     state.msg="<b>Oh_No</b> Nothing yet... "
                     commit('ERRORS', [state.msg,'error'] )
                          commit('GET_FILTRED_SHOPS', shops.shops) // Remove data from view
@@ -101,33 +107,45 @@ const store =  new Vuex.Store({
                       commit('ERRORS', [state.msg,'success'] )
                        commit('GET_FILTRED_SHOPS', shops.shops)
 
+                       
+
                     }
+                    
                    })
+
+                   
               },
 
             //What i Liked Aka My Preferred Shop
             PreferredShop ({ commit,state }) {
+              commit('loadingData')
                 axios
                   .get('/account/preferred', {
                       headers: { Authorization: "Bearer " + state.isToken }
                     })
                   .then(r => r.data.shops)
                   .then(shops => {
+                     
                     
                       commit('PREFERRED_SHOP', shops)
+
                    })
+
+                  
               },
 
              
             //Like Action & PreferredShop From Liked
 
             likeShop ({ commit,state },Shopid) {
+              commit('loadingData')
                 axios
                   .get('/account/shop/vote/'+Shopid+'-u',  {
                     headers: { Authorization: "Bearer " + state.isToken }
                   })
                   .then(r => r.data)
                   .then(shops => {
+                    
                     
                     if (shops.sucess=='delete_vote') {
                       state.msg="<b>Removed</b> But why, tell us what's wrong . " // Revoked Deslike
@@ -140,13 +158,15 @@ const store =  new Vuex.Store({
 
 
                      commit('LIKE_SHOP', Shopid)
+
                    })
-                   
+
+                  
               },
 
                 //Dislike Action
               disLikeShop ({ commit,state },Shopid) {
-              
+                commit('loadingData')
                 axios
                   .get('/account/shop/vote/'+Shopid.id+'-d',  {
                     headers: { Authorization: "Bearer " + state.isToken }
@@ -163,8 +183,9 @@ const store =  new Vuex.Store({
                       state.msg="<b>A Dislike</b> Tell us what's wrong whit this Store "  //Deslike
                       commit('ERRORS', [state.msg,'success'] )
                     }
-                   
+                    
                     commit('DISlIKE_SHOP', [Shopid.id,shops.sucess])  
+                   
                    })
                    
               },
@@ -172,14 +193,14 @@ const store =  new Vuex.Store({
 
               //Create User
             RegisterUser ({ commit,state },userInfo) {
-
+              commit('loadingData')
                 return  axios
-                  .post('/create/', {
+                  .post('/create', {
                     email: userInfo.email,
                     password: userInfo.password,
                   })
                   .then(r =>  {
-
+                
                     //Validation
                      if (typeof r.data.errors !== 'undefined' && Object.keys(r.data.errors).length > 0 ) {
 
@@ -192,28 +213,32 @@ const store =  new Vuex.Store({
 
                      }else{
                         commit('ERRORS', null)
-                        
+                        commit('REGISTER_USER',  r.data)
                         state.msg="<b>Yeay</b> See you inside..."
                         commit('ERRORS', [state.msg,'success'] )
-                        commit('REGISTER_USER',  r.data)
+                        
 
                      }
-                   
+                  
              
                   }
                 
                 )
-               
+                
               },
 
               //Create Auth Aka Login
               AuthRequest ({ commit,state },userInfo) {
+                commit('loadingData')
                 return  axios
-                  .post('/login/', {
+                  .post('/login', {
                     email: userInfo.email,
                     password: userInfo.password,
                   })
                   .then(r =>  {
+
+                 
+                    
                     //Validation
                      if (typeof r.data.errors !== 'undefined' && Object.keys(r.data.errors).length > 0 ) {
                          //Error
@@ -227,12 +252,11 @@ const store =  new Vuex.Store({
                         state.msg="<b>Yeay</b> Welcome To <strong>ShopiYa</strong>"
                         commit('ERRORS', [state.msg,'success'] )
                      }
-                   
              
                   }
-                
-                )
                
+                )
+                
               },
 
 
@@ -246,14 +270,16 @@ const store =  new Vuex.Store({
 
                 state.msg="<b>Bye</b> Hope we can see you soon"
                 commit('ERRORS', [state.msg,'success'] )
-                
+                commit('loadingData')
                 commit('LOGOUT');
+              
               },
 
 
               //Set out Notification
               KillNotifications({ commit }) {
                 commit('KILL_NOTIF' )
+                
               }
 
 
@@ -282,7 +308,7 @@ const store =  new Vuex.Store({
             GET_SHOPS (state, shops) {
                 
 
-             
+           
 
               state.shops = shops.map(shop=> {
 
@@ -295,13 +321,19 @@ const store =  new Vuex.Store({
                     
                 return shop
               })
+
+              state.loading=false
               },
+
+              
 
 
               //@Filter Comp
               GET_FILTRED_SHOPS (state, shops){
+
+              
                 let length = 30;
-                
+            
 
                 if (typeof shops !== 'undefined' && shops.length>0) {
                    state.shops = shops.map(shop=> {
@@ -314,6 +346,9 @@ const store =  new Vuex.Store({
                 }else{
                   state.shops=shops
                 }
+                state.loading=false
+
+                
                
               },
 
@@ -326,6 +361,8 @@ const store =  new Vuex.Store({
                   shop.address = shop.address.toLowerCase()
                   return shop
                 })
+
+                state.loading=false
               
               },
 
@@ -346,7 +383,7 @@ const store =  new Vuex.Store({
           
             DISlIKE_SHOP(state, deslikesShop){
 
-
+              
             state.shops = state.shops.map(shop=> {
 
                  if (shop.id == deslikesShop[0]  ) {
@@ -372,31 +409,40 @@ const store =  new Vuex.Store({
                             break;
                       
                       }
+
+                      
                     }
                     return shop
                   })
+
+                  state.loading=false
+                 
 
             },
 
             //User Registration :)
               REGISTER_USER (state,userInfo) {
               state.userInfo = userInfo
+              state.loading=false
+           
              },
 
            
                  
             //ONCF :)
-            AUTH_REQUEST(state) {
+            loadingData(state) {
                  state.loading = true;
                  
             },
 
+          
+           
             
           
             //Welcome again :)
             LOGIN(state,userAuth) {
                 localStorage.setItem("token",userAuth.access_token)
-                state.loading = false;
+                
                 state.isToken=localStorage.getItem("token") 
             },
 
@@ -404,6 +450,8 @@ const store =  new Vuex.Store({
             PROFILE(state,profile) {
               localStorage.setItem("user",profile.id)
               state.profileUser = localStorage.getItem("user");
+              state.loading=false
+              
             },
 
          
@@ -412,18 +460,21 @@ const store =  new Vuex.Store({
             LOGOUT(state) {
                state.isToken = localStorage.getItem("token");
                localStorage.clear();
+               state.loading=false
+              
              },
 
 
               //Show NotifError
               ERRORS (state,error) {
-
-                state.notification = error,
+                state.notification = error
+                state.loading=false
                 state.iskillNotif = false
               },
 
               //Close NotifError
               KILL_NOTIF (state) {
+                state.loading=false
                 state.iskillNotif =true
 
               }
@@ -472,6 +523,10 @@ const store =  new Vuex.Store({
               return state.iskillNotif;
            },
 
+
+           isLoading:state=>{
+            return state.loading;
+         },
            
 
 

@@ -18,17 +18,21 @@
                 
     </hgroup>
 
+
+    <Loading />
+
     </header>
 </template>
 
 
 <script>
 import Navbar from "@/components/appcomponent/elements/parts/Navbar.vue";
+import Loading from '@/components/appcomponent/elements/parts/spinner.vue';
 
 export default {
     name:'Header',
     components:{
-        Navbar
+        Navbar,Loading
     }
 }
 </script>

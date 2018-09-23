@@ -17,7 +17,7 @@ export default {
             distance:'',
             showReset:false,
             dataArray:[],
-            url:'/shops/'
+            url:'/shops'
         
         }
     },
@@ -32,17 +32,21 @@ export default {
                
 
                 if (this.$options.parent.$options.name=='PreferredShop') {
-                    this.url ='/account/preferred/'
+                    this.url ='/account/preferred'
                 }
 
                
 
-                 this.dataArray={
-                                "distance":this.distance,
-                                "url":this.url,
-                            }
+                
                 this.showReset=true
-                this.$store.dispatch('FilterShops',this.dataArray,this.url)
+                if (this.distance > 0) {
+                    this.dataArray={
+                                "distance":this.distance,
+                                "url":this.url+'/',
+                            }
+                }
+                
+                this.$store.dispatch('FilterShops',this.dataArray,this.url) 
                 
             },
 

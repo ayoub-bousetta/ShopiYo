@@ -63,7 +63,7 @@ export default {
               
 
                                 if (this.$store.getters.Errors[1] == "success") {
-                                    this.$router.push('/')
+                                    this.$router.push('/login')
                                 }
             
              

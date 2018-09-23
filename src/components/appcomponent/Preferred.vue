@@ -90,9 +90,10 @@ export default {
 
     
    loadShops(){
+     
 
       
-      if (this.$store.getters.loadShops.length >0) {
+      if (this.$store.getters.loadShops != 'undefined') {
         this.shofilter=true
         return this.$store.getters.loadShops;
       }else{
