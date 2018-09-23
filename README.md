@@ -64,7 +64,7 @@ and much more that you can find on the code.
 
 Perfect way: Create a table with user_id, shop_id, start_time, ended_time (ended_time will be auto calculated by adding 2h) after that it's server time (Real time database like firebase/ cron job script on server or a script on client side{not that cool})
 
-Okey way: Using localstorage or Cookies and settime to 2 hours but it can bypass so easy by deleting theme from the browser.
+Okey way: Using localstorage or Cookies and set time to 2 hours, but it can bypassed so easy by deleting theme from the browser.
 
 
 
@@ -96,7 +96,7 @@ npm run build -> to get the Dist file
 
 -> if you are all set You can go directly to .../api/shops to see the stores
 
-PS : If you are using localhost (make sure to change request->ip on ShopsControllers both in Controllers and Account/controllers)
+PS : If you are using localhost (make sure to change $request->ip on ShopsControllers both in Controllers and Account/controllers)
 
 ```
 
@@ -112,8 +112,9 @@ npm run build -> to get the Dist file
 
 ###### Live version 
 
-[See it live Client side](http://shopiyo.aubbusta.com)
-[See it live server](http://shopiyoapi.aubbusta.com/api/shops)
+-> [Client side](http://shopiyo.aubbusta.com)
+
+-> [Server Side API](http://shopiyoapi.aubbusta.com/api/shops)
 
 
 ##### Idea from this
