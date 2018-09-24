@@ -207,7 +207,7 @@ const store =  new Vuex.Store({
                          //ErrorHandlers
                          //commit('ERRORS', r.data.errors)
 
-                         state.msg="<b>Ops</b> Email already taken! Use another one."
+                         state.msg="<b>Ops</b> Email already taken! Or Password < 6 chars."
                          commit('ERRORS', [state.msg,'error'] )
 
 
@@ -264,13 +264,14 @@ const store =  new Vuex.Store({
 
 
               LogOut({ commit,state }) {
+                commit('loadingData')
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 localStorage.clear();//Making sure :)
-
+             
                 state.msg="<b>Bye</b> Hope we can see you soon"
                 commit('ERRORS', [state.msg,'success'] )
-                commit('loadingData')
+                
                 commit('LOGOUT');
               
               },
