@@ -1,5 +1,5 @@
 # ShopiYo
-Laravel 5.7 & VueJs based - [See it live](http://shopiyo.aubbusta.com)
+Laravel 5.7 & VueJs based - [See it live](http://shopiyo.aubbusta.co)
 
 ## Files for the challenge are located at /dist => [Index,+css+js files](https://github.com/ayoub-bousetta/ShopiYo/tree/master/dist)
 
