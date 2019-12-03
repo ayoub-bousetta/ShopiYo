@@ -114,9 +114,9 @@ npm run build -> to get the Dist file
 
 ###### Live version 
 
--> [Client side](http://shopiyo.aubbusta.com)
+-> [Client side](http://shopiyo.aubbusta.co)
 
--> [Server Side API](http://shopiyoapi.aubbusta.com/api/shops)
+-> [Server Side API](http://shopiyoapi.aubbusta.co/api/shops)
 
 
 ##### Idea from this
